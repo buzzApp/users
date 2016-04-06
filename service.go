@@ -14,7 +14,7 @@ type UserService interface {
 	GetByID(id string) (*model.User, error)
 	GetByUsername(username string) (*model.User, error)
 	Remove(id string) error
-	Update(user *model.UpdateUser) (*model.User, error)
+	Update(updatedUser *model.UpdateUser) (*model.User, error)
 }
 
 type userService struct{}

@@ -59,7 +59,7 @@ func main() {
 	// Define our app service
 	var service UserService
 	service = userService{}
-	// service = appServiceLogginMiddleware{l, service}
+	service = userServiceLogginMiddleware{l, service}
 
 	go func() {
 		l.Info("Establishing HTTP Bindings", "Main", "addr", httpAddress, "transport", "HTTP/JSON")
