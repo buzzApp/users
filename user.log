@@ -1,0 +1,4 @@
+ts=2016-04-06T13:32:38-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-06T13:32:38-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-06T13:32:38-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:63575 transport=HTTP/JSON
+ts=2016-04-06T13:32:38-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
