@@ -1,4 +1,6 @@
-ts=2016-04-06T13:32:38-04:00 type=info service=app method="Initializing app." message=Main
-ts=2016-04-06T13:32:38-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
-ts=2016-04-06T13:32:38-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:63575 transport=HTTP/JSON
-ts=2016-04-06T13:32:38-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-06T13:52:38-04:00 type=info service=app method=Create message="Service Results" success=true
+ts=2016-04-06T13:55:17-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-06T13:55:17-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-06T13:55:17-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:65160 transport=HTTP/JSON
+ts=2016-04-06T13:55:17-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-06T13:55:42-04:00 type=info service=app method=Create message="Service Results" success=false error="exception: E11000 duplicate key error index: buzz-test-user.users.$username_1_email_1 dup key: { : \"rodzzlessa\", : \"rodrigo@jointhebuzz.co\" }"

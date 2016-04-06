@@ -47,6 +47,16 @@ func (userService) Create(newUser *model.CreateUser) (*model.User, error) {
 	db := session.DB("buzz-test-user")
 	collection := db.C("users")
 
+	// Create a unique index for email and username
+	index := mgo.Index{
+		Key:    []string{"username", "email"},
+		Unique: true,
+	}
+	err = collection.EnsureIndex(index)
+	if err != nil {
+		return nil, err
+	}
+
 	//Insert our application
 	err = collection.Insert(user)
 	if err != nil {
@@ -164,6 +174,16 @@ func (userService) Update(updatedUser *model.UpdateUser) (*model.User, error) {
 	//Get our collection of applications
 	db := session.DB("buzz-test-user")
 	collection := db.C("users")
+
+	// Create a unique index for email and username
+	index := mgo.Index{
+		Key:    []string{"username", "email"},
+		Unique: true,
+	}
+	err = collection.EnsureIndex(index)
+	if err != nil {
+		return nil, err
+	}
 
 	//Insert our application
 	err = collection.Update(bson.M{"_id": updatedUser.ID}, user)
