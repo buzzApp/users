@@ -44,7 +44,7 @@ func serviceRegistration(l *logger.ServiceLogger, port int) {
 
 	// Create a service
 	service := new(stela.Service)
-	service.Name = "app.service.fg"
+	service.Name = "user.service.buzz"
 	service.Port = port
 
 	// Now register with stela
