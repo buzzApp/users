@@ -31,3 +31,6 @@ type UpdateUser struct {
 	Role      string `json:"role"`
 	Username  string `json:"username"`
 }
+
+//JWTToken represts the JWTToken
+type JWTToken string

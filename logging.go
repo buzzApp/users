@@ -50,6 +50,16 @@ func (mw userServiceLogginMiddleware) GetByUsername(username string) (*model.Use
 	return user, err
 }
 
+func (mw userServiceLogginMiddleware) Login(username, password string) (model.JWTToken, error) {
+	token, err := mw.UserService.Login(username, password)
+	if err != nil {
+		mw.logger.Info("Login", "Service Results", "success", "false", "error", err.Error())
+		return token, err
+	}
+	mw.logger.Info("Login", "Service Results", "success", "true")
+	return token, err
+}
+
 func (mw userServiceLogginMiddleware) Remove(id string) error {
 	err := mw.UserService.Remove(id)
 	if err != nil {

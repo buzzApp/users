@@ -71,6 +71,14 @@ func main() {
 		router.Handle(CreateUserPath, handleCreateUser(service)).Methods("POST")
 		l.Info("New Handler", "Main", "path", CreateUserPath, "type", "POST")
 
+		const GetUserByIDPath = "/users/{id}"
+		router.Handle(GetUserByIDPath, handleGetUserByID(service)).Methods("GET")
+		l.Info("New Handler", "Main", "path", GetUserByIDPath, "type", "GET")
+
+		const LoginUserPath = "/auth/authenticate"
+		router.Handle(LoginUserPath, handleLoginUser(service)).Methods("POST")
+		l.Info("New Handler", "Main", "path", LoginUserPath, "type", "POST")
+
 		// register our router and start the server
 		http.Handle("/", router)
 		errc <- http.ListenAndServe(httpAddress, nil)

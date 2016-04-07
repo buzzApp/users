@@ -17,6 +17,22 @@ type CreateUserResponse struct {
 	User *model.User `json:"user"`
 }
 
+// GetUserResponse describes the response of getting an user by is or username
+type GetUserResponse struct {
+	User *model.User
+}
+
+// LoginRequest describes the request for a user to login
+type LoginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+// LoginResponse describes the response for a user to login
+type LoginResponse struct {
+	Token model.JWTToken `json:"token"`
+}
+
 /*****************************/
 /* GENERIC RESPONSES */
 /*****************************/

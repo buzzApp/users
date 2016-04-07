@@ -1,10 +1,20 @@
 package main
 
 import (
+	"errors"
+	"time"
+
+	"github.com/dgrijalva/jwt-go"
+
 	"gitlab.com/buzz/user/model"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+)
+
+const (
+	// SecretKey is the key to hash the JWT token
+	SecretKey = "hello,ladies,lolz"
 )
 
 // UserService is an interface for controlling users
@@ -13,6 +23,7 @@ type UserService interface {
 	GetAll() ([]model.User, error)
 	GetByID(id string) (*model.User, error)
 	GetByUsername(username string) (*model.User, error)
+	Login(username, password string) (model.JWTToken, error)
 	Remove(id string) error
 	Update(updatedUser *model.UpdateUser) (*model.User, error)
 }
@@ -102,7 +113,7 @@ func (userService) GetByID(id string) (*model.User, error) {
 
 	//Get our applications from the collection
 	var retrievedUser *model.User
-	err = collection.Find(bson.M{"_id": id}).All(retrievedUser)
+	err = collection.Find(bson.M{"_id": id}).One(&retrievedUser)
 	if err != nil {
 		return nil, err
 	}
@@ -124,12 +135,37 @@ func (userService) GetByUsername(username string) (*model.User, error) {
 
 	//Get our applications from the collection
 	var retrievedUser *model.User
-	err = collection.Find(bson.M{"username": username}).All(retrievedUser)
+	err = collection.Find(bson.M{"username": username}).One(&retrievedUser)
 	if err != nil {
 		return nil, err
 	}
 
 	return retrievedUser, nil
+}
+
+func (u userService) Login(username, password string) (model.JWTToken, error) {
+	// try to retrive the user by the username
+	user, err := u.GetByUsername(username)
+	if err != nil {
+		return "", errors.New("invalid username or password")
+	}
+
+	// compare the passwords
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		return "", errors.New("invalid username or password")
+	}
+
+	// Generate the JWT token
+	token := jwt.New(jwt.GetSigningMethod("HS256"))
+	token.Claims["userid"] = user.ID
+	// Expire in 5 mins
+	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix()
+	tokenString, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return model.JWTToken(tokenString), nil
 }
 
 func (userService) Remove(id string) error {
