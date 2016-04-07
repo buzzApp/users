@@ -145,7 +145,7 @@ func handleLoginUser(svc UserService) http.Handler {
 		}
 
 		// save the app to our database
-		token, err := svc.Login(payload.Username, payload.Password)
+		token, err := svc.Login(payload.Username, payload.Password, r.Referer())
 		if err != nil {
 			respondWithError("unable to add user", err, w, http.StatusInternalServerError)
 			return

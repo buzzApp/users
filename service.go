@@ -1,7 +1,10 @@
 package main
 
 import (
+	"crypto/md5"
 	"errors"
+	"io"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -14,7 +17,7 @@ import (
 
 const (
 	// SecretKey is the key to hash the JWT token
-	SecretKey = "hello,ladies,lolz"
+	SecretKey = "33266AB738F764C2A3DD5D8F38336"
 )
 
 // UserService is an interface for controlling users
@@ -23,7 +26,7 @@ type UserService interface {
 	GetAll() ([]model.User, error)
 	GetByID(id string) (*model.User, error)
 	GetByUsername(username string) (*model.User, error)
-	Login(username, password string) (model.JWTToken, error)
+	Login(username, password, referer string) (model.JWTToken, error)
 	Remove(id string) error
 	Update(updatedUser *model.UpdateUser) (*model.User, error)
 }
@@ -143,7 +146,7 @@ func (userService) GetByUsername(username string) (*model.User, error) {
 	return retrievedUser, nil
 }
 
-func (u userService) Login(username, password string) (model.JWTToken, error) {
+func (u userService) Login(username, password, referer string) (model.JWTToken, error) {
 	// try to retrive the user by the username
 	user, err := u.GetByUsername(username)
 	if err != nil {
@@ -157,9 +160,13 @@ func (u userService) Login(username, password string) (model.JWTToken, error) {
 
 	// Generate the JWT token
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
-	token.Claims["userid"] = user.ID
-	// Expire in 5 mins
-	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix()
+	token.Claims["sub"] = user.ID
+	token.Claims["iat"] = time.Now().Unix()
+	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix() // Expire in 5 mins
+	token.Claims["nbf"] = time.Now().Unix()
+	token.Claims["iss"] = referer
+	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
+	token.Claims["username"] = user.Username
 	tokenString, err := token.SignedString([]byte(SecretKey))
 	if err != nil {
 		return "", err
@@ -228,6 +235,13 @@ func (userService) Update(updatedUser *model.UpdateUser) (*model.User, error) {
 	}
 
 	return user, nil
+}
+
+func makeJTI(subject, issuedAt interface{}) []byte {
+	h := md5.New()
+	io.WriteString(h, subject.(string))
+	io.WriteString(h, strconv.Itoa(int(issuedAt.(int64))))
+	return h.Sum(nil)
 }
 
 var globalSession *mgo.Session
