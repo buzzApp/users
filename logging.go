@@ -60,6 +60,16 @@ func (mw userServiceLogginMiddleware) Login(username, password, referer string) 
 	return token, err
 }
 
+func (mw userServiceLogginMiddleware) RefreshToken(userID, username, referer string) (model.JWTToken, error) {
+	token, err := mw.UserService.RefreshToken(userID, username, referer)
+	if err != nil {
+		mw.logger.Info("RefreshToken", "Service Results", "success", "false", "error", err.Error())
+		return token, err
+	}
+	mw.logger.Info("RefreshToken", "Service Results", "success", "true")
+	return token, err
+}
+
 func (mw userServiceLogginMiddleware) Remove(id string) error {
 	err := mw.UserService.Remove(id)
 	if err != nil {

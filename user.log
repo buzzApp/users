@@ -101,3 +101,80 @@ ts=2016-04-06T22:00:11-04:00 type=info service=app method="New Handler" message=
 ts=2016-04-06T22:00:11-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
 ts=2016-04-06T22:00:11-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
 ts=2016-04-06T22:00:24-04:00 type=info service=app method=Login message="Service Results" success=true
+ts=2016-04-07T16:30:16-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T16:30:16-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T16:30:16-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:54757 transport=HTTP/JSON
+ts=2016-04-07T16:30:16-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T16:30:16-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T16:30:16-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T16:30:16-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T16:52:14-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T16:52:14-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T16:52:14-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:56306 transport=HTTP/JSON
+ts=2016-04-07T16:52:14-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T16:52:14-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T16:52:14-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T16:52:14-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:02:14-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:02:14-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:02:14-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:56783 transport=HTTP/JSON
+ts=2016-04-07T17:02:14-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:02:14-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:02:14-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:02:14-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:11:01-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:11:01-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:11:01-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:57142 transport=HTTP/JSON
+ts=2016-04-07T17:11:01-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:11:01-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:11:01-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:11:01-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:11:39-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:11:39-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:11:39-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:57166 transport=HTTP/JSON
+ts=2016-04-07T17:11:39-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:11:39-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:11:39-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:11:39-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:13:13-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:13:13-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:13:13-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:57269 transport=HTTP/JSON
+ts=2016-04-07T17:13:13-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:13:13-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:13:13-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:13:13-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:13:51-04:00 type=info service=app method=Login message="Service Results" success=false error="invalid username or password"
+ts=2016-04-07T17:14:46-04:00 type=info service=app method=Create message="Service Results" success=true
+ts=2016-04-07T17:14:51-04:00 type=info service=app method=Login message="Service Results" success=true
+ts=2016-04-07T17:15:26-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:15:26-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:15:26-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:57303 transport=HTTP/JSON
+ts=2016-04-07T17:15:26-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:15:26-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:15:26-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:15:26-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:16:25-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:16:25-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:16:25-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:57354 transport=HTTP/JSON
+ts=2016-04-07T17:16:25-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:16:25-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:16:25-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:16:25-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+msg="http: multiple response.WriteHeader calls\n"
+ts=2016-04-07T17:21:57-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:21:57-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:21:57-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:57577 transport=HTTP/JSON
+ts=2016-04-07T17:21:57-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:21:57-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:21:57-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:21:57-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:22:30-04:00 type=info service=app method=Login message="Service Results" success=true
+ts=2016-04-07T17:31:53-04:00 type=info service=app method="Initializing app." message=Main
+ts=2016-04-07T17:31:53-04:00 type=info service=app method=ServiceRegistration message="Stela Client Registered"
+ts=2016-04-07T17:31:53-04:00 type=info service=app method="Establishing HTTP Bindings" message=Main addr=:58037 transport=HTTP/JSON
+ts=2016-04-07T17:31:53-04:00 type=info service=app method="New Handler" message=Main path=/users type=POST
+ts=2016-04-07T17:31:53-04:00 type=info service=app method="New Handler" message=Main path=/users/{id} type=GET
+ts=2016-04-07T17:31:53-04:00 type=info service=app method="New Handler" message=Main path=/auth/authenticate type=POST
+ts=2016-04-07T17:31:53-04:00 type=info service=app method="New Handler" message=Main path=/auth/refresh-token type=POST
+ts=2016-04-07T17:32:16-04:00 type=info service=app method=Login message="Service Results" success=true
+ts=2016-04-07T17:32:40-04:00 type=info service=app method=RefreshToken message="Service Results" success=true

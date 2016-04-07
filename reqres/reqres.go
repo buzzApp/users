@@ -33,6 +33,16 @@ type LoginResponse struct {
 	Token model.JWTToken `json:"token"`
 }
 
+// RefreshTokenRequest describes the request for refreshing a token
+type RefreshTokenRequest struct {
+	Token string `json:"token"`
+}
+
+// RefreshTokenResponse describes the response for refreshing a token
+type RefreshTokenResponse struct {
+	Token model.JWTToken `json:"token"`
+}
+
 /*****************************/
 /* GENERIC RESPONSES */
 /*****************************/

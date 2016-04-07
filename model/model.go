@@ -9,6 +9,7 @@ type User struct {
 	Password  string `bson:"password" json:"password"`
 	Role      string `bson:"role" json:"role"`
 	Username  string `bson:"username" json:"username"`
+	Timestamp int64  `bson:"timestamp" json:"timestamp"`
 }
 
 // CreateUser is a struct that describes the properties for creating a new user

@@ -27,6 +27,7 @@ type UserService interface {
 	GetByID(id string) (*model.User, error)
 	GetByUsername(username string) (*model.User, error)
 	Login(username, password, referer string) (model.JWTToken, error)
+	RefreshToken(userID, username, referer string) (model.JWTToken, error)
 	Remove(id string) error
 	Update(updatedUser *model.UpdateUser) (*model.User, error)
 }
@@ -48,6 +49,7 @@ func (userService) Create(newUser *model.CreateUser) (*model.User, error) {
 		Password:  string(hashedPassword),
 		Role:      newUser.Role,
 		Username:  newUser.Username,
+		Timestamp: time.Now().Unix(),
 	}
 
 	//Grab a copy of our session
@@ -159,7 +161,7 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 	}
 
 	// Generate the JWT token
-	token := jwt.New(jwt.GetSigningMethod("HS256"))
+	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims["sub"] = user.ID
 	token.Claims["iat"] = time.Now().Unix()
 	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix() // Expire in 5 mins
@@ -167,6 +169,24 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 	token.Claims["iss"] = referer
 	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
 	token.Claims["username"] = user.Username
+	tokenString, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return model.JWTToken(tokenString), nil
+}
+
+func (userService) RefreshToken(userID, username, referer string) (model.JWTToken, error) {
+	// Generate the JWT token
+	token := jwt.New(jwt.SigningMethodHS256)
+	token.Claims["sub"] = userID
+	token.Claims["iat"] = time.Now().Unix()
+	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix() // Expire in 5 mins
+	token.Claims["nbf"] = time.Now().Unix()
+	token.Claims["iss"] = referer
+	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
+	token.Claims["username"] = username
 	tokenString, err := token.SignedString([]byte(SecretKey))
 	if err != nil {
 		return "", err

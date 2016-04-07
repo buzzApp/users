@@ -79,6 +79,10 @@ func main() {
 		router.Handle(LoginUserPath, handleLoginUser(service)).Methods("POST")
 		l.Info("New Handler", "Main", "path", LoginUserPath, "type", "POST")
 
+		const RefreshTokenPath = "/auth/refresh-token"
+		router.Handle(RefreshTokenPath, authMiddleware(handleRefreshToken(service))).Methods("POST")
+		l.Info("New Handler", "Main", "path", RefreshTokenPath, "type", "POST")
+
 		// register our router and start the server
 		http.Handle("/", router)
 		errc <- http.ListenAndServe(httpAddress, nil)

@@ -2,8 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 
 	"gitlab.com/buzz/user/model"
@@ -147,7 +150,7 @@ func handleLoginUser(svc UserService) http.Handler {
 		// save the app to our database
 		token, err := svc.Login(payload.Username, payload.Password, r.Referer())
 		if err != nil {
-			respondWithError("unable to add user", err, w, http.StatusInternalServerError)
+			respondWithError("unable to log in user", err, w, http.StatusInternalServerError)
 			return
 		}
 
@@ -162,7 +165,57 @@ func handleLoginUser(svc UserService) http.Handler {
 		}
 
 		// Return the response
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
+	})
+}
+
+func handleRefreshToken(svc UserService) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Read the body into a string for json decoding
+		var payload = &reqres.RefreshTokenRequest{}
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			respondWithError("unable to decode json request", err, w, http.StatusInternalServerError)
+			return
+		}
+
+		// Decode jwt token
+		token, err := jwt.Parse(payload.Token, func(token *jwt.Token) (interface{}, error) {
+			// Valid alg is what we expect
+			if token.Method != jwt.SigningMethodHS256 {
+				return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+			}
+			return []byte(SecretKey), nil
+		})
+		if err != nil {
+			respondWithError("Access not allowed", err, w, http.StatusForbidden)
+			return
+		}
+
+		if !token.Valid {
+			respondWithError("Access not allowed", errors.New("Invalid jwt token"), w, http.StatusForbidden)
+			return
+		}
+
+		jwtToken, err := svc.RefreshToken(token.Claims["sub"].(string), token.Claims["username"].(string), r.Referer())
+		if err != nil {
+			respondWithError("unable to refresh token", err, w, http.StatusInternalServerError)
+			return
+		}
+
+		// Generate our response
+		resp := reqres.LoginResponse{Token: jwtToken}
+
+		// Marshal up the json response
+		js, err := json.Marshal(resp)
+		if err != nil {
+			respondWithError("unable to marshal json response", err, w, http.StatusInternalServerError)
+			return
+		}
+
+		// Return the response
+		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(js)
 	})
