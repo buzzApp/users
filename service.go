@@ -25,7 +25,6 @@ type UserService interface {
 	Create(newUser *model.CreateUser) (*model.User, error)
 	GetAll() ([]model.User, error)
 	GetByID(id string) (*model.User, error)
-	GetByUsername(username string) (*model.User, error)
 	Login(username, password, referer string) (model.JWTToken, error)
 	RefreshToken(userID, username, referer string) (model.JWTToken, error)
 	Remove(id string) error

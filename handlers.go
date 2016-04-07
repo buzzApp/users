@@ -97,41 +97,6 @@ func handleGetUserByID(svc UserService) http.Handler {
 	})
 }
 
-func handleGetUserByUsername(svc UserService) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Get the user ID from the url
-		username := mux.Vars(r)["username"]
-
-		// Do some validation
-		if err := validateGetUserByUsername(username); err != nil {
-			respondWithError("Validation error", err, w, http.StatusBadRequest)
-			return
-		}
-
-		// get the user from our database
-		user, err := svc.GetByUsername(username)
-		if err != nil {
-			respondWithError("unable to get user", err, w, http.StatusInternalServerError)
-			return
-		}
-
-		// Generate our response
-		resp := reqres.GetUserResponse{User: user}
-
-		// Marshal up the json response
-		js, err := json.Marshal(resp)
-		if err != nil {
-			respondWithError("unable to marshal json response", err, w, http.StatusInternalServerError)
-			return
-		}
-
-		// Return the response
-		w.WriteHeader(http.StatusCreated)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
-	})
-}
-
 func handleLoginUser(svc UserService) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Read the body into a string for json decoding
@@ -177,6 +142,11 @@ func handleRefreshToken(svc UserService) http.Handler {
 		var payload = &reqres.RefreshTokenRequest{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			respondWithError("unable to decode json request", err, w, http.StatusInternalServerError)
+			return
+		}
+
+		if err := validateRefreshToken(payload); err != nil {
+			respondWithError("Validation error", err, w, http.StatusBadRequest)
 			return
 		}
 
