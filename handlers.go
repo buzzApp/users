@@ -91,7 +91,7 @@ func handleGetUserByID(svc UserService) http.Handler {
 		}
 
 		// Return the response
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(js)
 	})
