@@ -19,7 +19,7 @@ type CreateUserResponse struct {
 
 // GetUserResponse describes the response of getting an user by is or username
 type GetUserResponse struct {
-	User *model.User
+	User *model.User `json:"user"`
 }
 
 // LoginRequest describes the request for a user to login

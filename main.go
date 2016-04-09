@@ -5,16 +5,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
-	"github.com/forestgiant/portutil"
 	"github.com/forestgiant/semver"
 	"github.com/gorilla/mux"
 )
 
 const (
 	//Version represents the semantic version of this service/api
-	Version = "0.1.0"
+	Version     = "0.1.0"
+	httpAddress = ":8000"
 )
 
 func main() {
@@ -39,16 +38,6 @@ func main() {
 
 	// `package log` domain
 	l.Info("Initializing app.", "Main")
-
-	//Obtain an available port
-	port, err := portutil.GetUniqueTCP()
-	if err != nil {
-		log.Fatal(err)
-	}
-	httpAddress := ":" + strconv.Itoa(port)
-
-	// Register service with Stela api
-	serviceRegistration(l, port)
 
 	// Mechanical stuff
 	errc := make(chan error)
