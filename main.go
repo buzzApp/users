@@ -8,6 +8,7 @@ import (
 
 	"github.com/forestgiant/semver"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 const (
@@ -74,7 +75,11 @@ func main() {
 
 		// register our router and start the server
 		http.Handle("/", router)
-		errc <- http.ListenAndServe(httpAddress, nil)
+		c := cors.New(cors.Options{
+			AllowedHeaders: []string{"Origin", "Accept", "Content-Type", "Authorization"},
+		})
+		handler := c.Handler(router)
+		errc <- http.ListenAndServe(httpAddress, handler)
 	}()
 
 	fmt.Println("Fatal Error", "Main", <-errc)

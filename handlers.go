@@ -115,7 +115,7 @@ func handleLoginUser(svc UserService) http.Handler {
 		// save the app to our database
 		token, err := svc.Login(payload.Username, payload.Password, r.Referer())
 		if err != nil {
-			respondWithError("unable to log in user", err, w, http.StatusInternalServerError)
+			respondWithError("unable to log in user", err, w, http.StatusBadRequest)
 			return
 		}
 

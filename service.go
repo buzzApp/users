@@ -159,16 +159,7 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 		return "", errors.New("invalid username or password")
 	}
 
-	// Generate the JWT token
-	token := jwt.New(jwt.SigningMethodHS256)
-	token.Claims["sub"] = user.ID
-	token.Claims["iat"] = time.Now().Unix()
-	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix() // Expire in 5 mins
-	token.Claims["nbf"] = time.Now().Unix()
-	token.Claims["iss"] = referer
-	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
-	token.Claims["username"] = user.Username
-	tokenString, err := token.SignedString([]byte(SecretKey))
+	tokenString, err := generateToken(user.ID, user.Username, referer)
 	if err != nil {
 		return "", err
 	}
@@ -177,16 +168,7 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 }
 
 func (userService) RefreshToken(userID, username, referer string) (model.JWTToken, error) {
-	// Generate the JWT token
-	token := jwt.New(jwt.SigningMethodHS256)
-	token.Claims["sub"] = userID
-	token.Claims["iat"] = time.Now().Unix()
-	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix() // Expire in 5 mins
-	token.Claims["nbf"] = time.Now().Unix()
-	token.Claims["iss"] = referer
-	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
-	token.Claims["username"] = username
-	tokenString, err := token.SignedString([]byte(SecretKey))
+	tokenString, err := generateToken(userID, username, referer)
 	if err != nil {
 		return "", err
 	}
@@ -254,6 +236,24 @@ func (userService) Update(updatedUser *model.UpdateUser) (*model.User, error) {
 	}
 
 	return user, nil
+}
+
+func generateToken(userID, username, referer string) (string, error) {
+	// Generate the JWT token
+	token := jwt.New(jwt.SigningMethodHS256)
+	token.Claims["sub"] = userID
+	token.Claims["iat"] = time.Now().Unix()
+	token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix() // Expire in 5 mins
+	token.Claims["nbf"] = time.Now().Unix()
+	token.Claims["iss"] = referer
+	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
+	token.Claims["username"] = username
+	tokenString, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }
 
 func makeJTI(subject, issuedAt interface{}) []byte {
