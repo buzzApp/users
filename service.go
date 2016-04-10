@@ -26,7 +26,7 @@ type UserService interface {
 	GetAll() ([]model.User, error)
 	GetByID(id string) (*model.User, error)
 	Login(username, password, referer string) (model.JWTToken, error)
-	RefreshToken(userID, username, referer string) (model.JWTToken, error)
+	RefreshToken(userID, username, referer, role string) (model.JWTToken, error)
 	Remove(id string) error
 	Update(updatedUser *model.UpdateUser) (*model.User, error)
 }
@@ -159,7 +159,7 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 		return "", errors.New("invalid username or password")
 	}
 
-	tokenString, err := generateToken(user.ID, user.Username, referer)
+	tokenString, err := generateToken(user.ID, user.Username, user.Role, referer)
 	if err != nil {
 		return "", err
 	}
@@ -167,8 +167,8 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 	return model.JWTToken(tokenString), nil
 }
 
-func (userService) RefreshToken(userID, username, referer string) (model.JWTToken, error) {
-	tokenString, err := generateToken(userID, username, referer)
+func (userService) RefreshToken(userID, username, referer, role string) (model.JWTToken, error) {
+	tokenString, err := generateToken(userID, username, role, referer)
 	if err != nil {
 		return "", err
 	}
@@ -238,7 +238,7 @@ func (userService) Update(updatedUser *model.UpdateUser) (*model.User, error) {
 	return user, nil
 }
 
-func generateToken(userID, username, referer string) (string, error) {
+func generateToken(userID, username, role, referer string) (string, error) {
 	// Generate the JWT token
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims["sub"] = userID
@@ -248,6 +248,7 @@ func generateToken(userID, username, referer string) (string, error) {
 	token.Claims["iss"] = referer
 	token.Claims["jti"] = makeJTI(token.Claims["sub"], token.Claims["iat"])
 	token.Claims["username"] = username
+	token.Claims["role"] = role
 	tokenString, err := token.SignedString([]byte(SecretKey))
 	if err != nil {
 		return "", err

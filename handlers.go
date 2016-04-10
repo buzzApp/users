@@ -168,7 +168,7 @@ func handleRefreshToken(svc UserService) http.Handler {
 			return
 		}
 
-		jwtToken, err := svc.RefreshToken(token.Claims["sub"].(string), token.Claims["username"].(string), r.Referer())
+		jwtToken, err := svc.RefreshToken(token.Claims["sub"].(string), token.Claims["username"].(string), token.Claims["role"].(string), r.Referer())
 		if err != nil {
 			respondWithError("unable to refresh token", err, w, http.StatusInternalServerError)
 			return
