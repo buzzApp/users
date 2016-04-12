@@ -1,6 +1,6 @@
 package reqres
 
-import "gitlab.com/buzz/user/model"
+import "github.com/buzzapp/user/model"
 
 // CreateUserRequest desribes the request for creating a new user
 type CreateUserRequest struct {

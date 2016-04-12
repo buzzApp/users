@@ -13,9 +13,9 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
+	"github.com/buzzapp/user/model"
+	"github.com/buzzapp/user/reqres"
 	"github.com/gorilla/mux"
-	"gitlab.com/buzz/user/model"
-	"gitlab.com/buzz/user/reqres"
 )
 
 var (

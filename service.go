@@ -9,7 +9,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 
-	"gitlab.com/buzz/user/model"
+	"github.com/buzzapp/user/model"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -26,7 +26,7 @@ type UserService interface {
 	GetAll() ([]model.User, error)
 	GetByID(id string) (*model.User, error)
 	Login(username, password, referer string) (model.JWTToken, error)
-	RefreshToken(userID, username, referer, role string) (model.JWTToken, error)
+	RefreshToken(userID, username, role, referer string) (model.JWTToken, error)
 	Remove(id string) error
 	Update(updatedUser *model.UpdateUser) (*model.User, error)
 }
@@ -167,7 +167,7 @@ func (u userService) Login(username, password, referer string) (model.JWTToken, 
 	return model.JWTToken(tokenString), nil
 }
 
-func (userService) RefreshToken(userID, username, referer, role string) (model.JWTToken, error) {
+func (userService) RefreshToken(userID, username, role, referer string) (model.JWTToken, error) {
 	tokenString, err := generateToken(userID, username, role, referer)
 	if err != nil {
 		return "", err

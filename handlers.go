@@ -9,8 +9,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 
-	"gitlab.com/buzz/user/model"
-	"gitlab.com/buzz/user/reqres"
+	"github.com/buzzapp/user/model"
+	"github.com/buzzapp/user/reqres"
 )
 
 func handleCreateUser(svc UserService) http.Handler {

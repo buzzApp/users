@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitlab.com/buzz/user/model"
+	"github.com/buzzapp/user/model"
 	"gitlab.fg/go/logger"
 )
 

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"regexp"
 
-	"gitlab.com/buzz/user/reqres"
+	"github.com/buzzapp/user/reqres"
 )
 
 func validateCreateUser(user *reqres.CreateUserRequest) error {
